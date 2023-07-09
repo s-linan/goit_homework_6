@@ -18,7 +18,7 @@ def handle_archive(filename: Path, target_folder: Path) -> None:
     folder_for_file = target_folder / normalize(filename.name.replace(filename.suffix, ''))
     folder_for_file.mkdir(exist_ok=True, parents=True)
     try:
-        shutil.unpack_archive(filename, folder_for_file, get_extension(filename).lower()) # TODO: Check!
+        shutil.unpack_archive(filename, folder_for_file)
     except shutil.ReadError:
         print("It's not archive")
         folder_for_file.rmdir()
@@ -43,7 +43,7 @@ def main(folder: Path):
     for file in parser.ARCHIVES:
         handle_archive(file, folder / 'Archives')
     for file in parser.OTHER:
-        handle_media(file, folder / 'Other')
+        handle_other(file, folder / 'Other')
     for folder in parser.FOLDERS[::-1]:
         handle_folder(folder)
 
